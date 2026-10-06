@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ready for work</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"><style>
+.ws{--ink:#1f1830;--pur:#5b3491;--or:#e8731c;--soft:#fff4e8;--ok:#1f7a45;--okl:#eef8f1;--no:#b8430c;--nol:#fff3ec;--rule:#d8cfe5;--pick:#5b3491;--blank:#2f7fd1;--yn:#1f7a45;--order:#c2410c;font-family:"Atkinson Hyperlegible",Verdana,"Segoe UI",sans-serif;color:var(--ink);font-size:18px;line-height:1.4}
+.ws.sz-xl{font-size:22px}
+.ws *{box-sizing:border-box}
+.ws .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ws .top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;padding-bottom:12px;border-bottom:3px solid var(--pur);margin-bottom:16px}
+.ws .top h1{margin:0;font-size:1.75em;line-height:1.15;color:var(--pur);flex:1 1 280px}
+.ws .idlines{display:flex;flex-direction:column;gap:10px;flex:0 1 3.4in;min-width:220px}
+.ws .idline{display:flex;align-items:flex-end;gap:10px}
+.ws .idlbl{font-weight:700;font-size:.9em}
+.ws .rule{flex:1;border-bottom:2px solid var(--ink);height:1.4em}
+.ws .idline input{flex:1;min-width:0;font:inherit;font-size:1.05em;border:0;border-bottom:2px solid var(--ink);padding:4px 2px;background:transparent;color:var(--ink);outline:none}
+.ws .idline input:focus{border-bottom-color:var(--or);background:var(--soft)}
+.ws .dirbox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--soft);border-left:6px solid var(--or);border-radius:4px 10px 10px 4px;padding:10px 16px;margin-bottom:18px}
+.ws .dirtext{flex:1 1 300px}
+.ws .dir{margin:0;font-weight:700;font-size:1.05em}
+.ws .how{margin:2px 0 0;font-size:.85em;color:#4d4363}
+
+.ws .part{margin:0 0 24px;--c:var(--pick)}
+.ws .part-blank{--c:var(--blank)} .ws .part-yn{--c:var(--yn)} .ws .part-order{--c:var(--order)}
+.ws .parthead{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;margin:0 0 10px;border-bottom:3px solid var(--c);padding-bottom:5px}
+.ws .parthead h2{margin:0;font-size:1.05em;color:var(--c)}
+.ws .pdir{flex:1 1 240px;font-size:.88em;color:#4d4363;font-weight:700}
+
+.ws .q{position:relative;padding:10px 0 14px;border-bottom:2px dashed var(--rule)}
+.ws .part .q:last-child{border-bottom:0}
+.ws .qdir{display:none;margin:0 0 10px;font-weight:700;font-size:.9em;color:#4d4363}
+.ws .qkind{display:inline-block;color:#fff;background:var(--c,var(--pur));border-radius:999px;padding:1px 12px;margin-right:6px;font-size:.9em}
+.ws .q-pick{--c:var(--pick)} .ws .q-blank{--c:var(--blank)} .ws .q-yn{--c:var(--yn)} .ws .q-order{--c:var(--order)}
+.ws .qhead{display:flex;align-items:flex-start;gap:10px}
+.ws .qnum{font-weight:700;color:var(--pur);min-width:1.6em;flex:0 0 auto}
+.ws .qtext{flex:1 1 auto;min-width:0;font-weight:700;font-size:1.05em}
+.ws .stmt{display:inline-block;font-weight:700}
+.ws .qbody{margin:10px 0 0 calc(1.6em + 10px)}
+.ws .qmark{display:none}
+.ws .qwhy{margin:8px 0 0 calc(1.6em + 10px);padding:6px 12px;border-radius:8px;background:#f6f3fa;font-size:.9em}
+
+.ws .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.ws .opt,.ws .yno,.ws .step{display:flex;align-items:center;gap:10px;min-height:2.9em;padding:8px 12px;border:3px solid var(--rule);border-radius:14px;background:#fff}
+.ws .olet{flex:0 0 auto;width:1.9em;height:1.9em;border:2px solid var(--ink);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.ws .oemo{font-size:1.5em;line-height:1;flex:0 0 auto}
+.ws .otxt,.ws .stxt{flex:1 1 auto;min-width:0}
+.ws .ynopts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:520px}
+.ws .yno{justify-content:center;font-weight:700;font-size:1.1em}
+.ws .yemo{font-size:1.5em;line-height:1}
+.ws .steps{display:flex;flex-direction:column;gap:8px;max-width:640px}
+.ws .sbox{flex:0 0 auto;width:1.9em;height:1.9em;border:2px solid var(--ink);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1em}
+.ws .gap{display:inline-block;min-width:6.5em;border-bottom:3px solid var(--ink);margin:0 .25em;text-align:center;font-weight:700;padding:0 6px;line-height:1.3}
+.ws .bank{border:2px dashed var(--c,var(--blank));border-radius:12px;padding:8px 12px;margin:0 0 12px;display:flex;gap:6px 12px;align-items:center;flex-wrap:wrap}
+.ws .banklbl{font-weight:700;color:var(--c,var(--blank));font-size:.85em;text-transform:uppercase;letter-spacing:.06em}
+.ws .chips{display:flex;gap:8px;flex-wrap:wrap}
+.ws .chip{font:inherit;font-weight:700;border:2px solid var(--rule);border-radius:999px;padding:4px 14px;background:#fff;color:var(--ink)}
+.ws .say{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:2px solid var(--pur);background:#fff;color:var(--pur);cursor:pointer;padding:0}
+.ws .say:hover{background:var(--pur);color:#fff}
+.ws .say:focus-visible,.ws .tbtn:focus-visible,.ws .bigbtn:focus-visible,.ws .chip:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+
+.ws-digital .opt,.ws-digital .yno,.ws-digital .step,.ws-digital .gap,.ws-digital .chip{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.ws-digital .opt:hover,.ws-digital .yno:hover,.ws-digital .step:hover{border-color:#b39ad3;background:#faf7fd}
+.ws-digital [role=button]:focus-visible{outline:3px solid var(--pur);outline-offset:2px}
+.ws-digital .opt.on,.ws-digital .yno.on,.ws-digital .step.on{border-color:var(--or);background:var(--soft)}
+.ws-digital .opt.on .olet{background:var(--or);border-color:var(--or);color:#fff}
+.ws-digital .step.on .sbox{background:var(--or);border-color:var(--or);color:#fff}
+.ws-digital .gap{background:#eef4fc;border-radius:6px 6px 0 0;min-height:1.5em}
+.ws-digital .gap.sel{outline:3px solid var(--or);outline-offset:2px;background:var(--soft)}
+.ws-digital .gap.filled{color:var(--blank)}
+.ws-digital .chip:hover{border-color:var(--blank)}
+.ws-digital .chip.used{opacity:.38;text-decoration:line-through}
+.ws-digital .opt.right,.ws-digital .yno.right,.ws-digital .step.right{border-color:var(--ok);background:var(--okl)}
+.ws-digital .opt.right .olet,.ws-digital .step.right .sbox{background:var(--ok);border-color:var(--ok)}
+.ws-digital .opt.wrong,.ws-digital .yno.wrong,.ws-digital .step.wrong{border-color:var(--no);background:var(--nol);border-style:dashed}
+.ws-digital .opt.wrong .olet,.ws-digital .step.wrong .sbox{background:var(--no);border-color:var(--no)}
+.ws-digital .gap.right{color:var(--ok);border-bottom-color:var(--ok)}
+.ws-digital .gap.wrong{color:var(--no);border-bottom-color:var(--no);text-decoration:line-through}
+.ws-digital .q.ok,.ws-digital .q.no{padding-left:12px;border-left:6px solid;border-radius:4px}
+.ws-digital .q.ok{border-left-color:var(--ok)} .ws-digital .q.no{border-left-color:var(--no)}
+.ws-digital .q.ok .qmark,.ws-digital .q.no .qmark{display:inline-block;margin:8px 0 0 calc(1.6em + 10px);font-weight:700;padding:2px 12px;border-radius:999px}
+.ws-digital .q.ok .qmark{color:var(--ok);background:var(--okl)} .ws-digital .q.no .qmark{color:var(--no);background:var(--nol)}
+.ws .qtools{margin-top:8px}
+
+/* one question at a time */
+.ws-paged .q{display:none;border:0;padding:4px 0 10px}
+.ws-paged .q.cur{display:block}
+.ws-paged .part{margin:0}
+.ws-paged .parthead{display:none}
+.ws-paged .part > .bank{display:none}
+.ws-paged .qdir{display:block}
+.ws-paged .qtext{font-size:1.25em}
+.ws-paged .opts{grid-template-columns:1fr}
+.ws-paged .bankslot .bank{margin:16px 0 0 calc(1.6em + 10px)}
+.ws .bankslot:empty{display:none}
+.ws-list .bankslot{display:none}
+.ws .pager{display:flex;align-items:center;gap:12px;margin:22px 0 6px;padding-top:14px;border-top:2px solid var(--rule)}
+.ws .pager .mid{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;color:#4d4363;font-size:.9em}
+.ws .prog{width:100%;max-width:280px;height:10px;border-radius:999px;background:#ece6f4;overflow:hidden}
+.ws .prog span{display:block;height:100%;background:var(--or);border-radius:999px;transition:width .2s}
+
+.ws .tbtn{font:inherit;font-size:.85em;font-weight:700;background:#fff;color:var(--pur);border:2px solid var(--pur);border-radius:10px;padding:7px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.ws .tbtn.small{font-size:.75em;padding:4px 10px;border-color:var(--rule)}
+.ws .tbtn.big{font-size:.95em;padding:10px 18px}
+.ws .readdir{flex:0 0 auto}
+.ws .bigbtn{font:inherit;font-size:1.05em;font-weight:700;background:var(--or);color:#fff;border:0;border-radius:12px;padding:12px 26px;cursor:pointer;box-shadow:0 4px 0 #a9500f}
+.ws .donebar{text-align:center;margin:24px 0 6px}
+.ws .result{border:3px solid var(--pur);border-radius:14px;padding:18px;background:#faf7fd;text-align:center;margin-top:14px}
+.ws .result h2{margin:2px 0 6px;font-size:1.35em;color:var(--pur)}
+.ws .resnote{margin:0 0 10px}
+.ws .emailrow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:14px 0 8px;font-weight:700}
+.ws .emailin{font:inherit;font-size:.95em;padding:8px 10px;border:2px solid #cbbde0;border-radius:9px;min-width:0;width:min(320px,100%)}
+.ws .rbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.ws .note{font-size:.75em;color:#5e5374;margin:12px 0 0}
+.ws .empty{color:#5e5374;font-style:italic}
+
+.ws .keypage{margin-top:28px;padding:18px 22px;border:2px solid var(--pur);border-radius:12px}
+.ws .keypage h1{margin:0;font-size:1.3em;color:var(--pur)}
+.ws .keysub{margin:2px 0 8px;color:#5e5374}
+.ws .keylist{margin:0;padding-left:1.8em}
+.ws .keylist li{margin:7px 0;font-size:.85em}
+.ws .keyq{display:block;color:#5e5374}
+.ws .keylet{display:inline-block;min-width:1.4em;text-align:center;border:2px solid var(--pur);border-radius:6px;color:var(--pur)}
+.ws .keydef{color:#4d4363}
+.ws .keynote{font-size:.8em;color:#5e5374;margin:14px 0 0}
+
+@media (max-width:620px){
+  .ws{font-size:16px}.ws.sz-xl{font-size:19px}
+  .ws .qbody,.ws .qwhy{margin-left:0}
+  .ws-digital .q.ok .qmark,.ws-digital .q.no .qmark{margin-left:0}
+  .ws .say{width:34px;height:34px}
+  .ws .pager .bigbtn,.ws .pager .tbtn{padding:10px 12px}
+  .ws-paged .bankslot .bank{margin-left:0}
+}
+.ws-print .q{break-inside:avoid;page-break-inside:avoid}
+.ws-print .parthead{break-after:avoid;page-break-after:avoid}
+.ws-print .keypage{break-before:page;page-break-before:always;margin-top:0}
+.ws-print .dirbox{background:#fff;border:2px solid var(--or);border-left-width:6px}
+.ws-print .gap{min-width:8em}
+
+html,body{margin:0;background:#f2eff6}
+.page{max-width:980px;margin:0 auto;padding:18px 14px 60px}
+#root{background:#fff;border:2px solid #d8cfe5;border-radius:12px;padding:24px 26px}
+@media (max-width:620px){#root{padding:14px 12px}.page{padding:8px 6px 40px}}
+</style></head><body><main class="page"><div id="root"></div></main><script>
+const CONFIG={"preset":"work","title":"Ready for work","directions":"Read each question. Do your best!","items":[{"t":"pick","q":"Your shift starts at 9:00. When should you get there?","choices":[{"e":"🕗","x":"8:50, a few minutes early"},{"e":"🕘","x":"9:15"},{"e":"🕙","x":"10:00"}],"ans":0,"why":"Getting there a little early means you are punctual.","fixed":false},{"t":"pick","q":"You don’t understand a task. What should you do?","choices":[{"e":"🙋","x":"Ask your supervisor"},{"e":"🤷","x":"Guess"},{"e":"🚪","x":"Leave it and go home"}],"ans":0,"why":"Asking is the fastest way to do it right.","fixed":false},{"t":"pick","q":"You are sick and can’t come to work. What do you do?","choices":[{"e":"📞","x":"Call your supervisor before your shift"},{"e":"😴","x":"Stay home and say nothing"},{"e":"📱","x":"Post about it online"}],"ans":0,"why":"Your supervisor needs to know so they can plan.","fixed":false},{"t":"blank","s":"The person who checks on your work is your ___.","a":"supervisor","why":""},{"t":"blank","s":"A short rest during your work day is a ___.","a":"break","why":""},{"t":"blank","s":"The hours you are scheduled to work are your ___.","a":"shift","why":""},{"t":"yn","q":"Saying “good morning” to a coworker.","a":0,"why":"A friendly hello starts the day well."},{"t":"yn","q":"Using your phone while a customer is waiting.","a":1,"why":"The customer comes first. Phones wait for break time."},{"t":"yn","q":"Washing your hands after your break.","a":0,"why":""},{"t":"order","q":"Put your work morning in order.","steps":["Wake up and get dressed.","Eat breakfast.","Leave for work on time.","Clock in.","Start your task."],"why":""}],"size":"l","rate":0.85,"ynLabels":"good","bankExtra":"","readAloud":true,"readOnTap":false,"paged":false,"showScore":true,"showMarks":true,"showWhy":true,"key":true,"dateLine":true,"mixChoices":true,"email":"burdettechris63@gmail.com","subject":"Worksheet results","seed":432480480};
+(function wsRuntime(){
+  'use strict';
+  const LET = 'ABCDEF';
+  const SPEAKER = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M3.5 9.2h3.8L12 5.4v13.2l-4.7-3.8H3.5z" fill="currentColor"/><path d="M15.2 9a4.2 4.2 0 0 1 0 6M17.8 6.4a7.8 7.8 0 0 1 0 11.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  const YN = {good:[['✅','Good'],['🔁','Try again']], yes:[['👍','Yes'],['👎','No']], truefalse:[['✔️','True'],['✖️','False']], safe:[['🟢','Safe'],['🛑','Not safe']]};
+  const ynL = cfg => YN[cfg.ynLabels] || YN.good;
+  const BLANK_RE = /_{2,}/;
+
+  function h(tag, props, ...kids){
+    const el = document.createElement(tag);
+    if (props) Object.keys(props).forEach(k => {
+      const v = props[k];
+      if (v === null || v === undefined || v === false) return;
+      if (k === 'class') el.className = v;
+      else if (k === 'html') el.innerHTML = v;
+      else if (k.slice(0, 2) === 'on' && typeof v === 'function') el.addEventListener(k.slice(2), v);
+      else if (k === 'value') el.value = v;
+      else el.setAttribute(k, v === true ? '' : v);
+    });
+    (function add(list){ list.forEach(c => { if (c === null || c === undefined || c === false) return; if (Array.isArray(c)) add(c); else el.appendChild(typeof c === 'string' || typeof c === 'number' ? document.createTextNode(String(c)) : c); }); })(kids);
+    return el;
+  }
+
+  /* seeded mixing so print, digital and answer key always agree */
+  function rng(seed){ let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function shuffled(n, seed, mustMove){
+    const id = [...Array(n).keys()];
+    if (n < 2) return id;
+    const r = rng(seed);
+    for (let tries = 0; tries < 60; tries++) {
+      const p = id.slice();
+      for (let i = n - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const t = p[i]; p[i] = p[j]; p[j] = t; }
+      if (!mustMove || p.some((v, i) => v !== i)) return p;
+    }
+    return id.map(i => (i + 1) % n);
+  }
+
+  function cleanItems(cfg){
+    const out = [];
+    (cfg.items || []).forEach(it => {
+      if (!it) return;
+      const why = String(it.why || '').trim();
+      if (it.t === 'pick') {
+        const q = String(it.q || '').trim(); if (!q) return;
+        const ch = []; let ans = -1;
+        (it.choices || []).forEach((c, i) => { const x = String((c && c.x) || '').trim(); if (!x) return; if (i === +it.ans) ans = ch.length; ch.push({e:String(c.e || '').trim(), x}); });
+        if (ch.length < 2 || ans < 0) return;
+        out.push({t:'pick', q, choices:ch, ans, fixed:!!it.fixed, why});
+      } else if (it.t === 'blank') {
+        let s = String(it.s || '').trim(); const a = String(it.a || '').trim();
+        if (!s || !a) return;
+        if (!BLANK_RE.test(s)) s += ' ___';
+        const m = s.match(BLANK_RE);
+        out.push({t:'blank', s, before:s.slice(0, m.index), after:s.slice(m.index + m[0].length), a, why});
+      } else if (it.t === 'yn') {
+        const q = String(it.q || '').trim(); if (!q) return;
+        out.push({t:'yn', q, a:+it.a === 1 ? 1 : 0, why});
+      } else if (it.t === 'order') {
+        const steps = (it.steps || []).map(x => String(x || '').trim()).filter(Boolean);
+        if (steps.length < 2) return;
+        out.push({t:'order', q:String(it.q || '').trim() || 'Put these in order.', steps, why});
+      }
+    });
+    return out;
+  }
+
+  function prepare(cfg){
+    const qs = cleanItems(cfg), seed = cfg.seed || 1, secs = [];
+    qs.forEach((q, i) => {
+      q.n = i + 1;
+      const s = seed + i * 7919;
+      if (q.t === 'pick') q.order = (q.fixed || !cfg.mixChoices) ? q.choices.map((_, k) => k) : shuffled(q.choices.length, s, false);
+      if (q.t === 'order') q.disp = shuffled(q.steps.length, s, true);
+      let sec = secs[secs.length - 1];
+      if (!sec || sec.t !== q.t) { sec = {t:q.t, qs:[]}; secs.push(sec); }
+      sec.qs.push(q);
+    });
+    const extra = String(cfg.bankExtra || '').split(',').map(x => x.trim()).filter(Boolean);
+    secs.forEach((sec, si) => {
+      if (sec.t !== 'blank') return;
+      const words = sec.qs.map(q => q.a);
+      extra.forEach(x => { if (!words.some(w => w.toLowerCase() === x.toLowerCase())) words.push(x); });
+      const p = shuffled(words.length, seed + si * 104729 + 3, false);
+      sec.bank = p.map(k => words[k]);
+    });
+    return {qs, secs};
+  }
+
+  function secName(t, cfg){ const L = ynL(cfg); return {pick:'Pick one', blank:'Fill in the blank', yn:L[0][1] + ' or ' + L[1][1], order:'Put in order'}[t]; }
+  function secDir(t, digital, cfg){
+    const L = ynL(cfg);
+    if (t === 'pick') return digital ? 'Tap the best answer.' : 'Circle the letter of the best answer.';
+    if (t === 'blank') return digital ? 'Tap a word from the word bank to fill the blank.' : 'Write a word from the word bank on each line.';
+    if (t === 'yn') return (digital ? 'Tap ' : 'Circle ') + L[0][1] + ' or ' + L[1][1] + '.';
+    return digital ? 'Tap the steps in order: first, second, third. Tap a step again to take its number off.' : 'Write 1, 2, 3 in the boxes to put the steps in order.';
+  }
+  const spoken = s => String(s).replace(BLANK_RE, ' blank ');
+
+  /* read aloud */
+  const canSpeak = () => !!(window.speechSynthesis && window.SpeechSynthesisUtterance);
+  function speak(text, cfg){
+    if (!canSpeak()) return;
+    try {
+      let t = spoken(text).replace(/\p{Extended_Pictographic}|️|‍/gu, '').trim();
+      if (!t) return;
+      if (t === t.toUpperCase() && t.length > 1) t = t.toLowerCase();
+      const u = new SpeechSynthesisUtterance(t);
+      u.rate = +((cfg && cfg.rate) || 0.85);
+      u.lang = document.documentElement.lang || 'en-US';
+      window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+    } catch(e) {}
+  }
+  function sayBtn(text, cfg, label){
+    return h('button', {type:'button', class:'say', 'aria-label':'Read aloud: ' + (label || spoken(text)), title:'Read aloud', html:SPEAKER,
+      onclick:e => { e.stopPropagation(); speak(text, cfg); },
+      onkeydown:e => e.stopPropagation()});
+  }
+  function tapable(el, fn){
+    el.tabIndex = 0; el.setAttribute('role', 'button');
+    el.addEventListener('click', fn);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+    return el;
+  }
+
+  function dl(name, blob){
+    const a = h('a', {href:URL.createObjectURL(blob), download:name}); document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+  }
+
+  /* ---------- staff answer key ---------- */
+  function buildKey(cfg, prep){
+    const L = ynL(cfg);
+    const box = h('section', {class:'keypage'}, h('h1', null, 'Answer key (staff)'), h('p', {class:'keysub'}, cfg.title || 'Practice worksheet'));
+    const ol = h('ol', {class:'keylist'});
+    prep.qs.forEach(q => {
+      let ans;
+      if (q.t === 'pick') { const k = q.order.indexOf(q.ans); ans = [h('b', {class:'keylet'}, LET[k]), ' ', q.choices[q.ans].x]; }
+      else if (q.t === 'blank') ans = [h('b', null, q.a)];
+      else if (q.t === 'yn') ans = [h('b', null, L[q.a][0] + ' ' + L[q.a][1])];
+      else ans = [h('b', null, 'Boxes top to bottom: ' + q.disp.map(i => i + 1).join(', ')), h('span', {class:'keydef'}, ' (' + q.steps.join(' → ') + ')')];
+      ol.appendChild(h('li', {value:String(q.n)}, h('span', {class:'keyq'}, q.t === 'blank' ? q.s : q.q), h('div', null, ans), q.why ? h('div', {class:'keydef'}, 'Why: ' + q.why) : null));
+    });
+    box.appendChild(ol);
+    box.appendChild(h('p', {class:'keynote'}, 'Reading aloud on paper: read each question, then each answer with its letter. Learners can point to or say their answer if writing is hard.'));
+    return box;
+  }
+
+  function mount(root, cfg, mode){
+    root.textContent = '';
+    const digital = mode === 'digital';
+    const paged = digital && !!cfg.paged;
+    root.className = 'ws ws-' + mode + ' sz-' + (cfg.size || 'l') + (paged ? ' ws-paged' : ' ws-list');
+    const talk = digital && cfg.readAloud && canSpeak();
+    const L = ynL(cfg);
+    const live = h('div', {class:'sr', 'aria-live':'polite'});
+    const announce = t => { live.textContent = ''; setTimeout(() => { live.textContent = t; }, 30); };
+    const nameEl = digital ? h('input', {type:'text', placeholder:'Type your name', 'aria-label':'Your name', autocomplete:'off'}) : null;
+
+    root.appendChild(h('header', {class:'top'},
+      h('h1', null, cfg.title || 'Practice worksheet'),
+      h('div', {class:'idlines'},
+        h('div', {class:'idline'}, h('span', {class:'idlbl'}, 'Name'), digital ? nameEl : h('span', {class:'rule'})),
+        !digital && cfg.dateLine ? h('div', {class:'idline'}, h('span', {class:'idlbl'}, 'Date'), h('span', {class:'rule short'})) : null)));
+
+    const dirText = cfg.directions || 'Read each question. Do your best!';
+    const how = !digital ? 'Each part tells you what to do.' : paged ? 'Answer one question at a time. Tap Next to go on. Tap I’m finished at the end.' : 'Answer every question. Tap I’m finished at the end.';
+    root.appendChild(h('div', {class:'dirbox'},
+      h('div', {class:'dirtext'}, h('p', {class:'dir'}, dirText), h('p', {class:'how'}, how)),
+      talk ? h('button', {type:'button', class:'tbtn readdir', onclick:() => speak(dirText + ' ' + how, cfg), html:SPEAKER + '<span>Read the directions</span>'}) : null));
+    root.appendChild(live);
+
+    const prep = prepare(cfg);
+    if (!prep.qs.length) { root.appendChild(h('p', {class:'empty'}, 'Add at least one complete question to see the worksheet.')); return; }
+
+    const apis = [];
+    let finished = false;
+
+    /* shared shell for one question */
+    function shell(q, headKids, sayText){
+      const markEl = h('span', {class:'qmark'});
+      const whyEl = h('p', {class:'qwhy', hidden:true}, h('b', null, 'Why: '), q.why || '');
+      const body = h('div', {class:'qbody'});
+      const bankSlot = h('div', {class:'bankslot'});
+      const el = h('div', {class:'q q-' + q.t},
+        h('p', {class:'qdir'}, h('span', {class:'qkind'}, secName(q.t, cfg)), ' ', secDir(q.t, digital, cfg)),
+        h('div', {class:'qhead'}, h('span', {class:'qnum'}, q.n + '.'), h('div', {class:'qtext'}, headKids), talk && sayText ? sayBtn(sayText, cfg, 'question ' + q.n) : null),
+        body, bankSlot, markEl, whyEl);
+      const api = {q, el, body, bankSlot, markEl, whyEl, marked:false};
+      api.setMark = st => {
+        api.marked = !!st;
+        el.classList.toggle('ok', st === 'ok'); el.classList.toggle('no', st === 'no' || st === 'none');
+        markEl.textContent = st === 'ok' ? '✓ Right!' : st === 'no' ? '✗ Look again' : st === 'none' ? '✗ No answer yet' : '';
+        whyEl.hidden = !(st === 'ok' && cfg.showWhy && q.why);
+      };
+      api.changed = () => { if (api.marked) api.setMark(''); };
+      return api;
+    }
+
+    function buildPick(q){
+      const api = shell(q, q.q, q.q);
+      const opts = h('div', {class:'opts'});
+      let chosen = null; const cells = [];
+      q.order.forEach((oi, k) => {
+        const c = q.choices[oi];
+        const cell = h('div', {class:'opt'}, h('span', {class:'olet'}, LET[k]), c.e ? h('span', {class:'oemo', 'aria-hidden':'true'}, c.e) : null, h('span', {class:'otxt'}, c.x),
+          talk ? sayBtn(c.x, cfg, 'answer ' + LET[k]) : null);
+        if (digital) tapable(cell, () => { if (cfg.readOnTap) speak(c.x, cfg); chosen = chosen === oi ? null : oi; api.changed(); paint(); if (chosen !== null) announce('You picked ' + LET[k] + ': ' + c.x); });
+        cells.push(cell); opts.appendChild(cell);
+      });
+      function paint(){ cells.forEach((cell, k) => { const on = q.order[k] === chosen; cell.classList.toggle('on', on); if (digital) cell.setAttribute('aria-pressed', on ? 'true' : 'false'); cell.classList.toggle('right', on && api.marked && chosen === q.ans); cell.classList.toggle('wrong', on && api.marked && chosen !== q.ans); }); }
+      api.body.appendChild(opts);
+      api.answered = () => chosen !== null;
+      api.correct = () => chosen === q.ans;
+      api.given = () => chosen === null ? '' : q.choices[chosen].x;
+      api.rightText = () => q.choices[q.ans].x;
+      api.reset = () => { chosen = null; api.setMark(''); paint(); };
+      const sm = api.setMark; api.setMark = st => { sm(st); paint(); };
+      return api;
+    }
+
+    function buildYn(q){
+      const api = shell(q, h('span', {class:'stmt'}, q.q), q.q);
+      const opts = h('div', {class:'ynopts'});
+      let chosen = null; const cells = [];
+      L.forEach((lab, k) => {
+        const cell = h('div', {class:'yno yno' + k}, h('span', {class:'yemo', 'aria-hidden':'true'}, lab[0]), h('span', {class:'ytxt'}, lab[1]));
+        if (digital) tapable(cell, () => { if (cfg.readOnTap) speak(lab[1], cfg); chosen = chosen === k ? null : k; api.changed(); paint(); if (chosen !== null) announce('You picked ' + lab[1]); });
+        cells.push(cell); opts.appendChild(cell);
+      });
+      function paint(){ cells.forEach((cell, k) => { const on = k === chosen; cell.classList.toggle('on', on); if (digital) cell.setAttribute('aria-pressed', on ? 'true' : 'false'); cell.classList.toggle('right', on && api.marked && chosen === q.a); cell.classList.toggle('wrong', on && api.marked && chosen !== q.a); }); }
+      api.body.appendChild(opts);
+      api.answered = () => chosen !== null;
+      api.correct = () => chosen === q.a;
+      api.given = () => chosen === null ? '' : L[chosen][1];
+      api.rightText = () => L[q.a][1];
+      api.reset = () => { chosen = null; api.setMark(''); paint(); };
+      const sm = api.setMark; api.setMark = st => { sm(st); paint(); };
+      return api;
+    }
+
+    function buildOrder(q){
+      const api = shell(q, q.q, q.q + ' ' + q.disp.map(i => q.steps[i]).join('. '));
+      const list = h('div', {class:'steps'});
+      const num = q.disp.map(() => null); const cells = [], boxes = [];
+      q.disp.forEach((si, k) => {
+        const box = h('span', {class:'sbox', 'aria-hidden':'true'});
+        const cell = h('div', {class:'step'}, box, h('span', {class:'stxt'}, q.steps[si]), talk ? sayBtn(q.steps[si], cfg) : null);
+        if (digital) tapable(cell, () => {
+          if (cfg.readOnTap) speak(q.steps[si], cfg);
+          if (num[k] !== null) { const n = num[k]; num[k] = null; num.forEach((v, j) => { if (v !== null && v > n) num[j] = v - 1; }); }
+          else { num[k] = num.filter(v => v !== null).length + 1; announce(q.steps[si] + ' is number ' + num[k]); }
+          api.changed(); paint();
+        });
+        cells.push(cell); boxes.push(box); list.appendChild(cell);
+      });
+      function paint(){ cells.forEach((cell, k) => { boxes[k].textContent = num[k] === null ? '' : String(num[k]); cell.classList.toggle('on', num[k] !== null);
+        if (digital) cell.setAttribute('aria-label', q.steps[q.disp[k]] + (num[k] === null ? ', no number yet' : ', number ' + num[k]));
+        cell.classList.toggle('right', api.marked && num[k] === q.disp[k] + 1); cell.classList.toggle('wrong', api.marked && num[k] !== null && num[k] !== q.disp[k] + 1); }); }
+      api.body.appendChild(list);
+      if (digital) api.body.appendChild(h('div', {class:'qtools'}, h('button', {type:'button', class:'tbtn small', onclick:() => { num.fill(null); api.changed(); paint(); announce('Numbers cleared.'); }}, 'Clear numbers')));
+      api.answered = () => num.some(v => v !== null);
+      api.correct = () => num.every((v, k) => v === q.disp[k] + 1);
+      api.given = () => { const seq = []; num.forEach((v, k) => { if (v !== null) seq[v - 1] = q.steps[q.disp[k]]; }); return seq.filter(Boolean).join(' > ') + (num.some(v => v === null) ? ' (not all numbered)' : ''); };
+      api.rightText = () => q.steps.join(' > ');
+      api.reset = () => { num.fill(null); api.setMark(''); paint(); };
+      const sm = api.setMark; api.setMark = st => { sm(st); paint(); };
+      paint();
+      return api;
+    }
+
+    /* fill in the blank: one shared word bank per group */
+    function makeBank(words){
+      const bank = {words, used:words.map(() => null), blanks:[], active:null, chips:[]};
+      bank.el = h('div', {class:'bank'}, h('span', {class:'banklbl'}, 'Word bank'));
+      const wrap = h('div', {class:'chips'}); bank.el.appendChild(wrap);
+      words.forEach((w, i) => {
+        const chip = digital ? h('button', {type:'button', class:'chip', onclick:() => bank.tapChip(i)}, w) : h('span', {class:'chip'}, w);
+        bank.chips.push(chip); wrap.appendChild(chip);
+      });
+      bank.paint = () => {
+        bank.chips.forEach((c, i) => { c.classList.toggle('used', bank.used[i] !== null); if (digital) c.setAttribute('aria-label', words[i] + (bank.used[i] !== null ? ', used. Tap to take it back' : '')); });
+        bank.blanks.forEach(b => b.paint());
+      };
+      bank.free = i => { if (i === null) return; const b = bank.used[i]; bank.used[i] = null; if (b) b.filled = null; };
+      bank.nextEmpty = from => { const n = bank.blanks.length, s = Math.max(0, bank.blanks.indexOf(from)); for (let k = 0; k < n; k++) { const b = bank.blanks[(s + k) % n]; if (b.filled === null) return b; } return null; };
+      bank.tapChip = i => {
+        if (cfg.readOnTap) speak(words[i], cfg);
+        if (bank.used[i] !== null) { const b = bank.used[i]; bank.free(i); b.api.changed(); bank.active = b; bank.paint(); announce(words[i] + ' taken back.'); return; }
+        const tgt = (bank.active && (paged || bank.active.filled === null)) ? bank.active : bank.nextEmpty(bank.active);
+        if (!tgt) { announce('Every blank is filled. Tap a blank to empty it.'); return; }
+        if (tgt.filled !== null) bank.free(tgt.filled);
+        tgt.filled = i; bank.used[i] = tgt; tgt.api.changed();
+        if (!paged) bank.active = bank.nextEmpty(tgt);
+        bank.paint(); announce(words[i] + ' goes in blank ' + tgt.api.q.n + '.');
+      };
+      return bank;
+    }
+    function buildBlank(q, bank){
+      const gap = h('span', {class:'gap'});
+      const api = shell(q, [q.before, gap, q.after], q.s);
+      const b = {api, filled:null};
+      b.paint = () => {
+        gap.textContent = b.filled === null ? ' ' : bank.words[b.filled];
+        gap.classList.toggle('filled', b.filled !== null);
+        gap.classList.toggle('sel', digital && bank.active === b);
+        gap.classList.toggle('right', api.marked && api.correct());
+        gap.classList.toggle('wrong', api.marked && b.filled !== null && !api.correct());
+        if (digital) gap.setAttribute('aria-label', 'Blank ' + q.n + (b.filled === null ? ', empty' : ': ' + bank.words[b.filled]) + (bank.active === b ? ', selected' : ''));
+      };
+      if (digital) tapable(gap, () => { if (b.filled !== null) { bank.free(b.filled); api.changed(); } bank.active = b; bank.paint(); });
+      bank.blanks.push(b);
+      api.bank = bank;
+      api.answered = () => b.filled !== null;
+      api.correct = () => b.filled !== null && bank.words[b.filled].toLowerCase() === q.a.toLowerCase();
+      api.given = () => b.filled === null ? '' : bank.words[b.filled];
+      api.rightText = () => q.a;
+      api.reset = () => { bank.free(b.filled); api.setMark(''); bank.paint(); };
+      const sm = api.setMark; api.setMark = st => { sm(st); bank.paint(); };
+      api.onShow = () => { bank.active = b; api.bankSlot.appendChild(bank.el); bank.paint(); };
+      return api;
+    }
+
+    /* build all questions, grouped */
+    const listEl = h('div', {class:'qs'});
+    prep.secs.forEach(sec => {
+      const bank = sec.t === 'blank' ? makeBank(sec.bank) : null;
+      const secEl = h('section', {class:'part part-' + sec.t},
+        h('div', {class:'parthead'}, h('h2', null, secName(sec.t, cfg)), h('span', {class:'pdir'}, secDir(sec.t, digital, cfg)),
+          talk && !paged ? sayBtn(secDir(sec.t, digital, cfg), cfg, 'part directions') : null));
+      if (bank) { secEl.appendChild(bank.el); bank.home = secEl; }
+      sec.qs.forEach(q => {
+        const api = q.t === 'pick' ? buildPick(q) : q.t === 'yn' ? buildYn(q) : q.t === 'order' ? buildOrder(q) : buildBlank(q, bank);
+        apis.push(api); secEl.appendChild(api.el);
+      });
+      if (bank) { bank.active = digital && !paged ? bank.blanks[0] : null; bank.paint(); }
+      listEl.appendChild(secEl);
+    });
+    root.appendChild(listEl);
+
+    if (!digital) { if (cfg.key) root.appendChild(buildKey(cfg, prep)); return; }
+
+    /* ----- one question at a time ----- */
+    let cur = 0;
+    const prog = h('div', {class:'prog', 'aria-hidden':'true'}, h('span'));
+    const where = h('span', {class:'where'});
+    const back = h('button', {type:'button', class:'tbtn big', onclick:() => go(cur - 1)}, '◀ Back');
+    const next = h('button', {type:'button', class:'bigbtn', onclick:() => go(cur + 1)}, 'Next ▶');
+    const done = h('button', {type:'button', class:'bigbtn'}, 'I’m finished');
+    function go(i){
+      cur = Math.max(0, Math.min(apis.length - 1, i));
+      window.speechSynthesis && window.speechSynthesis.cancel();
+      apis.forEach((a, k) => { a.el.classList.toggle('cur', k === cur); });
+      const a = apis[cur];
+      if (a.onShow) a.onShow();
+      listEl.querySelectorAll('.part').forEach(p => p.classList.toggle('curpart', p.contains(a.el)));
+      where.textContent = 'Question ' + (cur + 1) + ' of ' + apis.length;
+      prog.firstChild.style.width = Math.round((cur + 1) / apis.length * 100) + '%';
+      back.style.visibility = cur === 0 ? 'hidden' : 'visible';
+      next.hidden = cur === apis.length - 1; done.hidden = cur !== apis.length - 1;
+      announce('Question ' + (cur + 1) + ' of ' + apis.length);
+    }
+    function setPaged(on){
+      root.classList.toggle('ws-paged', on); root.classList.toggle('ws-list', !on);
+      if (!on) listEl.querySelectorAll('.part').forEach(p => { const b = apis.find(a => a.bank && p.contains(a.el)); if (b) { p.insertBefore(b.bank.el, p.children[1]); } });
+    }
+    if (paged) {
+      root.appendChild(h('div', {class:'pager'}, back, h('div', {class:'mid'}, where, prog), next, done));
+      go(0);
+    } else {
+      root.appendChild(h('div', {class:'donebar'}, done));
+    }
+    const out = h('div', {class:'resultwrap'});
+    root.appendChild(out);
+
+    done.addEventListener('click', () => {
+      window.speechSynthesis && window.speechSynthesis.cancel();
+      finished = true;
+      const got = apis.filter(a => a.correct()).length, total = apis.length, open = apis.filter(a => !a.answered()).length;
+      if (cfg.showMarks) apis.forEach(a => a.setMark(a.correct() ? 'ok' : a.answered() ? 'no' : 'none'));
+      if (paged) { setPaged(false); root.querySelector('.pager').hidden = true; }
+      const name = (nameEl.value || '').trim();
+      const text = () => {
+        const T = [(cfg.title || 'Practice worksheet') + ' - results', 'Learner: ' + (name || '(no name entered)'), 'Date: ' + new Date().toLocaleString(), 'Score: ' + got + ' of ' + total + ' correct', ''];
+        apis.forEach(a => {
+          const q = a.q, st = a.correct() ? '[right] ' : a.answered() ? '[wrong] ' : '[no answer] ';
+          T.push('  ' + st + q.n + '. ' + (q.t === 'blank' ? q.s : q.q) + (a.correct() ? '' : a.answered() ? '  (answered: ' + a.given() + '; right answer: ' + a.rightText() + ')' : '  (right answer: ' + a.rightText() + ')'));
+        });
+        return T.join('\n');
+      };
+      const subj = (cfg.subject || 'Worksheet results') + (name ? ' - ' + name : '');
+      const missed = got < total;
+      out.textContent = '';
+      const em = h('input', {type:'email', class:'emailin', placeholder:'name@example.com', value:cfg.email || '', 'aria-label':'Email address for results'});
+      const copyBtn = h('button', {type:'button', class:'tbtn big', onclick:() => {
+        const t = text(), ok = () => { copyBtn.textContent = 'Copied'; setTimeout(() => { copyBtn.textContent = 'Copy results'; }, 2000); };
+        const fallback = () => { const ta = h('textarea', {style:'position:fixed;left:-999px'}); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch(e) {} ta.remove(); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fallback); else fallback();
+      }}, 'Copy results');
+      const heading = cfg.showScore ? 'You got ' + got + ' of ' + total + ' right.' : 'Nice work. Your answers are ready to send.';
+      const sub = [];
+      if (open) sub.push(open === 1 ? '1 question does not have an answer yet.' : open + ' questions do not have an answer yet.');
+      if (cfg.showMarks && missed) sub.push('Questions marked with an X need another look.');
+      out.appendChild(h('div', {class:'result'},
+        h('h2', null, heading),
+        sub.length ? h('p', {class:'resnote'}, sub.join(' ')) : null,
+        cfg.showMarks && missed ? h('div', {class:'rbtns'}, h('button', {type:'button', class:'bigbtn', onclick:() => {
+          const wrong = []; apis.forEach((a, k) => { if (!a.correct()) { a.reset(); wrong.push(k); } else a.setMark(''); });
+          out.textContent = ''; finished = false;
+          if (paged) { setPaged(true); root.querySelector('.pager').hidden = false; go(wrong[0] || 0); root.scrollIntoView({behavior:'smooth', block:'start'}); }
+          else apis[wrong[0] || 0].el.scrollIntoView({behavior:'smooth', block:'center'});
+          announce('Wrong answers cleared. Try those questions again.');
+        }}, 'Fix the ones I missed')) : null,
+        h('div', {class:'emailrow'}, h('label', null, 'Send results to'), em),
+        h('div', {class:'rbtns'},
+          h('button', {type:'button', class:cfg.showMarks && missed ? 'tbtn big' : 'bigbtn', onclick:() => {
+            const qs = 'to=' + encodeURIComponent(em.value.trim()) + '&su=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(text());
+            const w = window.open('https://mail.google.com/mail/?view=cm&fs=1&' + qs, '_blank');
+            if (!w) window.location.href = 'https://mail.google.com/mail/?view=cm&fs=1&' + qs;
+          }}, 'Open in Gmail'),
+          h('button', {type:'button', class:'tbtn big', onclick:() => { const a = h('a', {href:'mailto:' + em.value.trim() + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(text())}); document.body.appendChild(a); a.click(); a.remove(); }}, 'Email app'),
+          copyBtn,
+          h('button', {type:'button', class:'tbtn big', onclick:() => dl('results' + (name ? '-' + name.replace(/[^\w-]+/g, '_') : '') + '.txt', new Blob([text()], {type:'text/plain'}))}, 'Save results file'),
+          h('button', {type:'button', class:'tbtn big', onclick:() => { mount(root, cfg, mode); window.scrollTo(0, 0); }}, 'Start over')),
+        h('p', {class:'note'}, 'Open in Gmail needs internet and a Gmail sign-in. No internet? Use Copy results or Save results file.')));
+      announce(heading);
+      out.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
+
+  window.WS = {mount, prepare, cleanItems, speak, canSpeak, h, ynL};
+})();
+WS.mount(document.getElementById("root"),CONFIG,"digital");
+</script></body></html>
